@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap_min.css' %}">
+    <title>PyPie Derbie</title>
+</head>
+<style>
+    .nav-right {
+        display: flex;
+        justify-content: flex-end
+    }
+    .body{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .left-div,.right-div{
+        width: 50%;
+    }
+    a{
+        border: 2px solid black;
+        border-radius: 0px;
+        box-shadow: 2px 2px 0px 0px black;
+        margin-left: 10px;
+        color: black;
+    }
+
+</style>
+
+<body>
+    <div class="nav-right mt-2">
+        <a href="{% url 'FinalExamApp:add_pies' %}"class="btn btn-primary">Pie Derby</a>
+        <a href="{% url 'FinalExamApp:destroy' %}" class="btn btn-primary">Log Out</a>
+    </div>
+
+    <div class="body">
+        <div class="left-div ml-2">
+            <h1 class="font-weight-bold font-italic">PyPies BY {{ request.session.username }}</h1>
+            <form name="shows" class="shows-form" method="GET" action="/action">
+                {% csrf_token %}
+                <table>
+                    <tr>
+                        <th class="font-weight-bold font-italic">Name</th>
+                        <th class="font-weight-bold font-italic">Action</th>
+                    </tr>
+                    <div class="mb-3">
+                    {% for pypie in pypie_by_user_id %}
+                        <tr>
+                        <td class="font-weight-bold font-italic">{{ pypie.name }}</td>
+                        <td>
+                            <a href="{% url 'FinalExamApp:edit_pypie' pypie.id %}">Edit</a>
+                            <a href="{% url 'FinalExamApp:delete' pypie.id %}">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </div>
+                </table>
+            </form>
+        </div>
+
+
+        <div class="right-div">
+            <h1 class="font-weight-bold font-italic">Add a New Pypie :-</h1>
+            <form action="{% url 'FinalExamApp:dashboard' %}" method="post">
+                {% csrf_token %}
+                <fieldset>
+                    <div class="form-group">
+                        <label for="disabledTextInput" class="font-weight-bold font-italic">Name :-</label>
+                        <input type="text" name="name" class="form-control-sm border-dark" placeholder="Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="disabledTextInput" class="font-weight-bold font-italic">Filling :-</label>
+                        <input type="text" name="filling" class="form-control-sm border-dark" placeholder="Filling">
+                    </div>
+                    <div class="form-group">
+                        <label for="disabledTextInput" class="font-weight-bold font-italic">Crust :-</label>
+                        <input type="text" name="crust" class="form-control-sm border-dark" placeholder="Crust">
+                    </div>
+
+                    <input type="hidden" name="user_id_who_add" value="{{request.session.userid}}">
+                    <button type="submit" class="btn btn-primary">Add a Pie</button>
+                </fieldset>
+            </form>
+        </div>
+
+
+    </div>
+</body>
+
+</html>

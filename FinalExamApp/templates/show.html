@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap_min.css' %}">
+    <title>PyPie Derby</title>
+</head>
+
+<style>
+    .right-nav {
+        display: flex;
+    }
+
+    a {
+        border: 2px solid black;
+        border-radius: 0px;
+        box-shadow: 2px 2px 0px 0px black;
+        margin-left: 10px;
+        color: black;
+    }
+
+    .body {
+        width: fit-content;
+        height: fit-content;
+        margin: 50px 500px;
+    }
+</style>
+
+<body>
+    <div class="right-nav">
+        <a href="{% url 'FinalExamApp:dashboard' %}" class="btn btn-primary">Dash Board</a>
+        <a href="{% url 'FinalExamApp:destroy' %}" class="btn btn-primary">Log out</a>
+    </div>
+    <div class="body">
+        <h1 class="font-weight-bold font-italic">{{ show_pypie.name }} By {{ show_pypie.user.first_name }}</h1>
+        <h2 class="font-weight-bold font-italic">{{ show_pypie.filling }}</h2>
+        <h2 class="font-weight-bold font-italic">with {{ show_pypie.crust }}</h2>
+        <p class="font-weight-bold font-italic">Cast a Vote : </p>
+        <a href="{% url 'FinalExamApp:vote' show_pypie.id %}" class="btn btn-primary">Delicious</a>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap_min.css' %}">
+    <title>Pypie Derby</title>
+</head>
+
+<style>
+    .news-form {
+        width: 500px;
+        color: rgb(255, 255, 255);
+        font-size: 18px;
+        font-family: sans-serif;
+        background-color: #154a68;
+        padding: 10px;
+    }
+
+    .news-form input,
+    .news-form select,
+    .news-form textarea {
+        border: none;
+        padding: 5px;
+        margin-top: 10px;
+        font-family: sans-serif;
+    }
+
+    .news-form input:focus,
+    .news-form textarea:focus {
+        box-shadow: 3px 3px 10px rgb(228, 228, 228), -3px -3px 10px rgb(224, 224, 224);
+    }
+
+    .news-form .submit {
+        width: 15%;
+        padding: 4px 0;
+        font-size: 10px;
+        color: rgb(44, 44, 44);
+        border-radius: 0px;
+    }
+
+    .news-form .submit:hover {
+        box-shadow: 3px 3px 6px rgb(255, 214, 176);
+    }
+
+    #title,
+    #desc {
+        display: block;
+    }
+
+    .continer {
+        height: auto;
+        width: auto;
+        margin: 50px 0px;
+    }
+    a{
+        border: 2px solid black;
+        border-radius: 0px;
+        box-shadow: 2px 2px 0px 0px black;
+        margin-left: 10px;
+        color: black;
+    }
+</style>
+
+<body>
+    <!-- {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %} -->
+    <div style="display: flex; justify-content: flex-end">
+        <a href="{% url 'FinalExamApp:dashboard' %}" class="btn-primary">Dash Board</a>
+        <a href="{% url 'FinalExamApp:destroy' %}" class="btn-primary">Log out</a>
+    </div>
+    <div class="continer">
+        <h1>Edit A Show</h1>
+        <form action="{% url 'FinalExamApp:edit' pypie.id %}" method="POST" class="news-form">
+            {% csrf_token %}
+            <div>
+                <label for="title" class="font-weight-bold font-italic">Name :</label>
+                <input type="text" name="name" id="title" value="{{ pypie.name }}">
+            </div>
+            <div>
+                <div>
+                    <label for="network" class="font-weight-bold font-italic">Filling :</label>
+                    <input type="text" name="filling" id="network" value="{{ pypie.filling }}">
+                </div>
+                <div>
+                    <label for="relase_date" class="font-weight-bold font-italic">Crust :</label>
+                    <input type="text" name="crust" id="relase_date" value="{{ pypie.crust }}">
+                </div>
+            </div>
+            <button type="submit" class="submit btn btn-primary">Edit Pie</button>
+        </form>
+    </div>
+</body>
+
+</html>

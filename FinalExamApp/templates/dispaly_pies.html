@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap_min.css' %}">
+    <title>Document</title>
+</head>
+
+<style>
+    .right-nav {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+
+    a {
+        border: 2px solid black;
+        border-radius: 0px;
+        box-shadow: 2px 2px 0px 0px black;
+        margin-left: 10px;
+        color: black;
+    }
+</style>
+
+<body>
+    <div class="right-nav mr-2 mt-2">
+        <a href="{% url 'FinalExamApp:dashboard' %}" class="font-weight-bold font-italic btn btn-primary">Dash Board</a>
+        <a href="{% url 'FinalExamApp:destroy' %}" class="font-weight-bold font-italic btn btn-primary">Log out</a>
+    </div>
+    <div>
+        <h1 class="font-weight-bold font-italic">PyPie Derby</h1>
+        <form name="shows" class="shows-form" method="GET" action="/action">
+            {% csrf_token %}
+            <table>
+                <tr>
+                    <th class="font-weight-bold font-italic">Name</th>
+                    <th class="font-weight-bold font-italic">PyPie By</th>
+                    <th class="font-weight-bold font-italic">Votes</th>
+                </tr>
+                {% for pypie in all_pies %}
+                <tr>
+                    {% for id in number %}
+                    {% if id.0 == pypie.id %}
+                    <td class="font-weight-bold font-italic"><a href="{% url 'FinalExamApp:show' pypie.id %}">{{ pypie.name }}</a></td>
+                    <td class="font-weight-bold font-italic">{{ pypie.user.first_name }}</td>
+                    <td class="font-weight-bold font-italic">{{ id.1 }}</td>
+                    {% endif %}
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </table>
+        </form>
+    </div>
+</body>
+
+</html>
